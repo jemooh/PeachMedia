@@ -1,7 +1,7 @@
 package com.tech.peachmedia.feature_media_posts.data.datasource.remote.model
 
 data class PostsResponse(
-    val documents: PostDocuments? = null,
+    val documents: List<PostDocuments> ? = null,
 )
 
 data class PostDocuments(
@@ -50,7 +50,11 @@ data class Comments(
 )
 
 data class ArrayValue(
-    val values: List<String>? = null
+    val values: List<Values>? = null
+)
+
+data class Values(
+    val stringValue: String? = null
 )
 
 

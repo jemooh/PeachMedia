@@ -4,13 +4,14 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(indices = [Index(value = ["id"], unique = true)])
+@Entity(indices = [Index(value = ["userId"], unique = true)])
 data class User(
-    @PrimaryKey
-    val id: String,
-    val username: String,
-    val email: String,
-    val createTime: String,
-    val updateTime: String
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
+    val userId: String,
+    val username: String? = null,
+    val email: String? = null,
+    val createTime: String? = null,
+    val updateTime: String? = null
 )
 
