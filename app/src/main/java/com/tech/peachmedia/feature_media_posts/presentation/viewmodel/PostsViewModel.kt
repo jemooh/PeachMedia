@@ -29,7 +29,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         getAllPosts()
     }
 
-    fun fetchRemotePost() {
+    private fun fetchRemotePost() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = postsRepository.fetchRemoteMediaPost()) {
                 is Result.Loading -> {
@@ -52,7 +52,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         }
     }
 
-    fun fetchRemoteUsers() {
+    private fun fetchRemoteUsers() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = postsRepository.fetchRemoteUsers()) {
                 is Result.Loading -> {
@@ -101,7 +101,6 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
             _state.value = state.value.copy(
                 posts = items
             )
-            Timber.d("PostItems.." + mediaType + items.count())
         }.launchIn(viewModelScope)
     }
 
@@ -109,17 +108,6 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         postsRepository.getAllPosts().onEach { items ->
             _state.value = state.value.copy(
                 posts = items
-            )
-            Timber.d("PostItems.." + items.count())
-        }.launchIn(viewModelScope)
-    }
-
-    fun getPosts(): Flow<List<Post>> = postsRepository.getPosts()
-
-    fun getPostById(documentId: String?) {
-        postsRepository.getPostById(documentId).onEach { item ->
-            _state.value = state.value.copy(
-                post = item
             )
         }.launchIn(viewModelScope)
     }
@@ -132,7 +120,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         }.launchIn(viewModelScope)
     }
 
-    fun savePostUrl(documentId: String?, url: String) {
+    private fun savePostUrl(documentId: String?, url: String) {
         viewModelScope.launch {
             postsRepository.updatePostUrl(documentId, url)
         }
