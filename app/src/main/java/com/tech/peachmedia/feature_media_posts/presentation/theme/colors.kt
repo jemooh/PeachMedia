@@ -2,6 +2,6 @@ package com.tech.peachmedia.feature_media_posts.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Yellow200 = Color(0xFFf6bc3e)
-val Yellow500 = Color(0xFFf6aa3e)
-val Blue200 = Color(0xFF4c8ce3)
+val purple_500 = Color(0xFF6200EE)
+val purple_700 = Color(0xFF3700B3)
+val purple_200 = Color(0xFFBB86FC)

@@ -1,6 +1,7 @@
 package com.tech.peachmedia
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.tech.peachmedia.di.appModule
 import javax.annotation.Nullable
 import org.jetbrains.annotations.NotNull
@@ -13,7 +14,12 @@ class PeachApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initTimber()
+        //initFirebase()
         initKoin()
+    }
+
+    private fun initFirebase() {
+        FirebaseApp.initializeApp(this)
     }
 
     private fun initKoin() {

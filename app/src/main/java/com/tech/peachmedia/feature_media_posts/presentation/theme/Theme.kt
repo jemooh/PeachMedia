@@ -8,18 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = Yellow200,
-    primaryVariant = Yellow500,
+    primary = purple_500,
+    primaryVariant = purple_700,
     secondary = Color.White,
 )
 
 private val LightColorPalette = lightColors(
-    primary = Yellow200,
-    primaryVariant = Yellow500,
+    primary = purple_500,
+    primaryVariant = purple_700,
     secondary = Color.White,
 
-    background = Blue200,
-    surface = Blue200,
+    background = purple_200,
+    surface = purple_200,
     onPrimary = Color.White,
     onSecondary = Color.Black,
     onBackground = Color.White,
@@ -39,7 +39,7 @@ fun PeachAppTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = typography,
         shapes = shapes,
         content = content
     )

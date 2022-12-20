@@ -14,7 +14,7 @@ val dm_sans = FontFamily(
 )
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val typography = Typography(
     h1 = TextStyle(
         fontFamily = dm_sans,
         fontWeight = FontWeight.Bold,
