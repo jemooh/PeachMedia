@@ -195,7 +195,8 @@ dependencies {
 
     testImplementation("app.cash.turbine:turbine:0.7.0")
 
-    androidTestImplementation("androidx.ui:ui-test:1.1.1")
+
+
 
 
 

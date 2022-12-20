@@ -21,5 +21,8 @@ One page Jetpack Compose application that displays multimedia content in a verti
 * Gradle
     * [Gradle Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 
+* Testing
+  AndroidComposeTest
+
 
 | <img src="home.jpg" height="480"> | <img src="comments.jpg" height="480">
