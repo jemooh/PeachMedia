@@ -27,6 +27,8 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.tech.peachmedia.R
 import com.tech.peachmedia.feature_media_posts.data.datasource.local.model.Comment
 import com.tech.peachmedia.feature_media_posts.domain.utils.Constants
@@ -35,6 +37,7 @@ import com.tech.peachmedia.feature_media_posts.domain.utils.Util.formatDateTimeW
 import com.tech.peachmedia.feature_media_posts.presentation.model.PostView
 import com.tech.peachmedia.feature_media_posts.presentation.viewmodel.PostsViewModel
 import org.koin.androidx.compose.getViewModel
+import timber.log.Timber
 
 
 @Preview(showSystemUi = true, showBackground = true)
@@ -103,7 +106,7 @@ fun FilterView() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 8.dp),
-                label = { Text("Filter feeds") },
+                label = { Text(stringResource(R.string.tv_filter_feeds)) },
                 trailingIcon = {
                     Icon(icon, "contentDescription",
                         Modifier.clickable { expanded = !expanded })
@@ -141,13 +144,6 @@ fun FilterView() {
 }
 
 
-@Composable
-fun ViewComments(comments: List<Comment>) {
-    Column {
-        for (comment in comments) {
-            Card {
-                Text(comment.comment)
-            }
-        }
-    }
-}
+
+
+

@@ -19,7 +19,7 @@ fun VideoCard(videoUrl: String) {
         .build()
         .also { exoPlayer ->
             val mediaItem = MediaItem.Builder()
-                .setUri("https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")
+                .setUri(videoUrl)
                 .build()
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()

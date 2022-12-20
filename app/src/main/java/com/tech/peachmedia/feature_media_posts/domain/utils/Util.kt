@@ -1,5 +1,8 @@
 package com.tech.peachmedia.feature_media_posts.domain.utils
 
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -7,7 +10,7 @@ import java.util.*
 object Util {
     fun getUserIdString(str: String?): String {
         return try {
-            str?.split("/")?.map { it.trim() }?.last() ?:""
+            str?.split("/")?.map { it.trim() }?.last() ?: ""
         } catch (e: Exception) {
             ""
         }
@@ -39,5 +42,18 @@ object Util {
         } catch (e: Exception) {
         }
         return retStr
+    }
+
+    fun getImageUrl(imageId:String) {
+        val storage = Firebase.storage("gs://peach-assessment.appspot.com")
+        val storageRef =
+            storage.getReferenceFromUrl("gs://peach-assessment.appspot.com/NEiFSfRshs7sIFVEtEQ9/9Gh48fyb6gVeY7cn2ITA")
+
+        storageRef.downloadUrl.addOnSuccessListener {
+            Timber.d("Url:" + it)
+        }
+            .addOnFailureListener {
+                Timber.d("Url:" + it.message)
+            }
     }
 }

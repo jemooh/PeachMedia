@@ -9,4 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface CommentsDao : CoroutineBaseDao<Comment> {
     @Query("SELECT * FROM Comment WHERE documentId=:documentId ")
     fun getPostComments(documentId: String?):List<Comment>
+
+    @Query("SELECT * FROM Comment WHERE documentId=:documentId ")
+    fun getCommentsById(documentId: String?):Flow<List<Comment>>
 }

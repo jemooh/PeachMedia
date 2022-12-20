@@ -2,6 +2,8 @@ package com.tech.peachmedia.feature_media_posts.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tech.peachmedia.feature_media_posts.data.datasource.local.model.Comment
+import com.tech.peachmedia.feature_media_posts.data.datasource.local.model.Post
 import com.tech.peachmedia.feature_media_posts.data.repository.PostsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -73,7 +75,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
             _state.value = state.value.copy(
                 posts = items
             )
-            Timber.d("PostItems.."+mediaType+items.count())
+            Timber.d("PostItems.." + mediaType + items.count())
         }.launchIn(viewModelScope)
     }
 
@@ -82,10 +84,11 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
             _state.value = state.value.copy(
                 posts = items
             )
-            Timber.d("PostItems.."+items.count())
+            Timber.d("PostItems.." + items.count())
         }.launchIn(viewModelScope)
     }
 
+    fun getPosts(): Flow<List<Post>> = postsRepository.getPosts()
 
     fun getPostById(documentId: String?) {
         postsRepository.getPostById(documentId).onEach { item ->
@@ -95,10 +98,26 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         }.launchIn(viewModelScope)
     }
 
+    fun getCommentById(documentId: String?) {
+        postsRepository.getCommentsById(documentId).onEach { items ->
+            _state.value = state.value.copy(
+                comments = items
+            )
+        }.launchIn(viewModelScope)
+    }
+
+    fun savePostUrl(documentId: String?, url: String) {
+        viewModelScope.launch {
+            postsRepository.updatePostUrl(documentId, url)
+        }
+    }
+
 }
+
 
 data class PostsState(
     val posts: List<PostView> = emptyList(),
+    val comments: List<Comment> = emptyList(),
     val post: PostView? = null,
     val isRefreshingPosts: Boolean = false,
     val isSuccessFetchPosts: Boolean = false,

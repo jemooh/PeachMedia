@@ -1,43 +1,68 @@
 package com.tech.peachmedia.feature_media_posts.presentation.ui
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import com.squareup.picasso.Picasso.LoadedFrom
+import com.tech.peachmedia.R
+import com.tech.peachmedia.feature_media_posts.domain.utils.Constants
 import com.tech.peachmedia.feature_media_posts.presentation.theme.TopBar
 import com.tech.peachmedia.feature_media_posts.presentation.viewmodel.PostsViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var storage: FirebaseStorage
     private val postsViewModel: PostsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /* storage = Firebase.storage("gs://peach-assessment.appspot.com")
-        var storageRef = storage.reference
-        var spaceRef = storageRef.child("NEiFSfRshs7sIFVEtEQ9/9Gh48fyb6gVeY7cn2IT")
+        setContentView(R.layout.main)
 
-
-        Timber.d("Url:" + spaceRef?.downloadUrl)
-*/
+        FirebaseApp.initializeApp(this)
 
         postsViewModel.fetchRemotePost()
         postsViewModel.fetchRemoteUsers()
+
+        downloadFirebaseUrls()
+
         setContent {
             MainScreen()
         }
+
+
+    }
+
+    private fun downloadFirebaseUrls() {
+        postsViewModel.getPosts().onEach { posts ->
+            if (posts.isNotEmpty()) {
+                for (post in posts) {
+                    if (post.url.isNullOrEmpty()) {
+                        val storage = Firebase.storage("gs://peach-assessment.appspot.com")
+                        val storageRef =
+                            storage.getReferenceFromUrl(Constants.STORAGE_BASE_URL + post.storageRef)
+                        storageRef.downloadUrl.addOnSuccessListener { url ->
+                            postsViewModel.savePostUrl(post.documentId, url.toString())
+                        }
+                            .addOnFailureListener {
+                                Timber.d("Url:" + it.message)
+                            }
+                    }
+                }
+            }
+        }.launchIn(lifecycleScope)
 
     }
 
@@ -46,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         MaterialTheme {
             Surface(color = MaterialTheme.colors.background) {
                 Scaffold(
-                    topBar = { TopBar() }
+                    topBar = { TopBar(title = stringResource(R.string.app_name)) }
                 ) {
                     PostsFeedsScreen()
                 }

@@ -14,7 +14,7 @@ class PeachApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initTimber()
-        //initFirebase()
+        initFirebase()
         initKoin()
     }
 

@@ -9,13 +9,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import timber.log.Timber
 
 
 @Composable
 fun ImageCard(imageUrl: String) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data("https://criticologos.com/wp-content/uploads/2022/11/qEVUtrk8_B4-HD.jpg")
+            .data(imageUrl)
             .crossfade(true)
             .build(),
         contentDescription = "",
@@ -24,4 +27,6 @@ fun ImageCard(imageUrl: String) {
             .fillMaxWidth()
             .height(150.dp)
     )
+
+
 }

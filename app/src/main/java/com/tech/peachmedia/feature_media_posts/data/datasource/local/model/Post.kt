@@ -12,6 +12,7 @@ data class Post(
     val authorID: String? = null,
     val mediaType: String? = null,
     val storageRef: String? = null,
+    val url: String? = null,
     val caption: String? = null,
     val createdAt: String? = null,
     val createTime: String? = null,

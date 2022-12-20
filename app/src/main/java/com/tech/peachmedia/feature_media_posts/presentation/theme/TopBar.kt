@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun TopBar() {
+fun TopBar(title: String) {
     TopAppBar(
-        title = { Text("Peach Media App") }
+        title = { Text(title) }
     )
 }
 
@@ -16,6 +16,6 @@ fun TopBar() {
 @Composable
 fun TopBarPreview() {
     PeachAppTheme {
-        TopBar()
+        TopBar("")
     }
 }

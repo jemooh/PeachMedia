@@ -12,6 +12,7 @@ data class PostView(
     var authorID: String? = null,
     var mediaType: String? = null,
     var storageRef: String? = null,
+    var url: String? = null,
     var caption: String? = null,
     var username: String? = null,
     var createdAt: String? = null,

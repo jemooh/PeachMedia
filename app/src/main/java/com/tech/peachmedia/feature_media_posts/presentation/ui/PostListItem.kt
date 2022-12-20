@@ -10,17 +10,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.tech.peachmedia.R
 import com.tech.peachmedia.feature_media_posts.domain.utils.Constants
 import com.tech.peachmedia.feature_media_posts.domain.utils.Util
 import com.tech.peachmedia.feature_media_posts.presentation.model.PostView
+import timber.log.Timber
 
 
 @Composable
 fun PostListItem(postView: PostView) {
     var viewcomments by remember { mutableStateOf(false) }
     if (viewcomments) {
-        ViewComments(postView.comments)
+        //ViewComments(postView.comments)
     } else {
         Card(
             modifier = Modifier
@@ -40,9 +43,9 @@ fun PostListItem(postView: PostView) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 if (postView.mediaType == Constants.mediaType.PHOTO) {
-                    ImageCard(postView.storageRef.toString())
+                    ImageCard(postView.url.toString())
                 } else {
-                    VideoCard(postView.storageRef.toString())
+                    VideoCard(postView.url.toString())
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))

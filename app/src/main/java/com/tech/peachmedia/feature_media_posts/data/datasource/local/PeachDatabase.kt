@@ -12,7 +12,7 @@ import com.tech.peachmedia.feature_media_posts.data.datasource.local.model.User
 
 @Database(
     entities = [User::class, Post::class, Comment::class],
-    version = 1
+    version = 2
 
 )
 @TypeConverters(Converters::class)
