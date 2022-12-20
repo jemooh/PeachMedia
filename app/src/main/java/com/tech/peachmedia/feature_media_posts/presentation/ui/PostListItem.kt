@@ -1,5 +1,6 @@
 package com.tech.peachmedia.feature_media_posts.presentation.ui
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -7,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -14,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.tech.peachmedia.R
 import com.tech.peachmedia.feature_media_posts.domain.utils.Constants
+import com.tech.peachmedia.feature_media_posts.domain.utils.Constants.DOCUMENTID
 import com.tech.peachmedia.feature_media_posts.domain.utils.Util
 import com.tech.peachmedia.feature_media_posts.presentation.model.PostView
 import timber.log.Timber
@@ -23,7 +26,12 @@ import timber.log.Timber
 fun PostListItem(postView: PostView) {
     var viewcomments by remember { mutableStateOf(false) }
     if (viewcomments) {
-        //ViewComments(postView.comments)
+        LocalContext.current.startActivity(
+            Intent(
+                LocalContext.current,
+                CommentsActivity::class.java
+            ).putExtra(DOCUMENTID, postView.documentId)
+        )
     } else {
         Card(
             modifier = Modifier
@@ -71,9 +79,12 @@ fun PostListItem(postView: PostView) {
                             .padding(top = 8.dp)
                     )
 
-                    if (postView.comments.isNotEmpty()){
+                    if (postView.comments.isNotEmpty()) {
                         Text(
-                            text = String.format(stringResource(R.string.tv_view_all_comments), postView.comments.count()),
+                            text = String.format(
+                                stringResource(R.string.tv_view_all_comments),
+                                postView.comments.count()
+                            ),
                             style = MaterialTheme.typography.body1,
                             fontSize = 12.sp,
                             modifier = Modifier
@@ -82,9 +93,12 @@ fun PostListItem(postView: PostView) {
                                     viewcomments = true
                                 }
                         )
-                    }else{
+                    } else {
                         Text(
-                            text = String.format(stringResource(R.string.tv_comments), postView.comments.count()),
+                            text = String.format(
+                                stringResource(R.string.tv_comments),
+                                postView.comments.count()
+                            ),
                             style = MaterialTheme.typography.body1,
                             fontSize = 12.sp,
                             modifier = Modifier
@@ -94,7 +108,6 @@ fun PostListItem(postView: PostView) {
                                 }
                         )
                     }
-
 
 
                 }

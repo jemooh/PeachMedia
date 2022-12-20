@@ -26,45 +26,13 @@ import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
-    private val postsViewModel: PostsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main)
-
-        FirebaseApp.initializeApp(this)
-
-        postsViewModel.fetchRemotePost()
-        postsViewModel.fetchRemoteUsers()
-
-        downloadFirebaseUrls()
-
         setContent {
             MainScreen()
         }
-
-
     }
 
-    private fun downloadFirebaseUrls() {
-        postsViewModel.getPosts().onEach { posts ->
-            if (posts.isNotEmpty()) {
-                for (post in posts) {
-                    if (post.url.isNullOrEmpty()) {
-                        val storage = Firebase.storage("gs://peach-assessment.appspot.com")
-                        val storageRef =
-                            storage.getReferenceFromUrl(Constants.STORAGE_BASE_URL + post.storageRef)
-                        storageRef.downloadUrl.addOnSuccessListener { url ->
-                            postsViewModel.savePostUrl(post.documentId, url.toString())
-                        }
-                            .addOnFailureListener {
-                                Timber.d("Url:" + it.message)
-                            }
-                    }
-                }
-            }
-        }.launchIn(lifecycleScope)
-
-    }
 
     @Composable
     fun MainScreen() {

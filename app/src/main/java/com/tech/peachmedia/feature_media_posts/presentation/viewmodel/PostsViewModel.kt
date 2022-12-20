@@ -1,13 +1,17 @@
 package com.tech.peachmedia.feature_media_posts.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.tech.peachmedia.feature_media_posts.data.datasource.local.model.Comment
 import com.tech.peachmedia.feature_media_posts.data.datasource.local.model.Post
 import com.tech.peachmedia.feature_media_posts.data.repository.PostsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import com.tech.peachmedia.feature_media_posts.data.datasource.remote.model.Result
+import com.tech.peachmedia.feature_media_posts.domain.utils.Constants
 import com.tech.peachmedia.feature_media_posts.presentation.model.PostView
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,6 +25,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
     init {
         fetchRemoteUsers()
         fetchRemotePost()
+        downloadFirebaseUrls()
         getAllPosts()
     }
 
@@ -68,6 +73,27 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
                 }
             }
         }
+    }
+
+    private fun downloadFirebaseUrls() {
+        postsRepository.getPosts().onEach { posts ->
+            if (posts.isNotEmpty()) {
+                for (post in posts) {
+                    if (post.url.isNullOrEmpty()) {
+                        val storage = Firebase.storage("gs://peach-assessment.appspot.com")
+                        val storageRef =
+                            storage.getReferenceFromUrl(Constants.STORAGE_BASE_URL + post.storageRef)
+                        storageRef.downloadUrl.addOnSuccessListener { url ->
+                            savePostUrl(post.documentId, url.toString())
+                        }
+                            .addOnFailureListener {
+                                Timber.d("Url:" + it.message)
+                            }
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+
     }
 
     fun filterPostByMediaType(mediaType: String) {

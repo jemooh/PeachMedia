@@ -9,6 +9,7 @@ object Constants {
     const val SIMPLE_DATE_TIME_MS_FORMAT_WITH_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val SIMPLE_READABLE_DAY_DATE_TIME_FORMAT_AM_PM = "dd MMM, yyyy | HH:mm a"
     const val EMPTY_STRING=""
+    const val DOCUMENTID="DOCUMENTID"
 
     object mediaType {
         const val PHOTO = "photo"

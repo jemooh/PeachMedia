@@ -24,50 +24,30 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CommentsView(documentId: String?) {
-    val contextForToast = LocalContext.current.applicationContext
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
-
+fun ViewComments(documentId:String?) {
     val postsViewModel = getViewModel<PostsViewModel>()
     postsViewModel.getCommentById(documentId)
     val uiState = postsViewModel.state.collectAsState().value
-
-
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 56.dp,
-        sheetContent = {
-
-            Column() {
-                /* Text(
-                     text = "Comments")
-                 )*/
-
+    LazyColumn(
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        items(
+            items = uiState.comments,
+            itemContent = {
+                CommentsView(comment = it.comment)
             }
-            LazyColumn {
-                items(
-                    items = uiState.comments,
-                    itemContent = {
-                        ViewComments(comment = it)
-                    }
-                )
-            }
-
-        }) {
+        )
     }
 
 }
 
-
 @Composable
-fun ViewComments(comment: Comment) {
+fun CommentsView(comment:String){
     Column {
         Column {
             Text(
-                text = comment.comment, style = MaterialTheme.typography.body1,
+                text = comment, style = MaterialTheme.typography.body1,
                 modifier = Modifier.padding(16.dp),
                 textAlign = TextAlign.Left
             )
