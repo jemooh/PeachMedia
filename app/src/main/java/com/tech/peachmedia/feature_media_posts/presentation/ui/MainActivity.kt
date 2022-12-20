@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 Scaffold(
                     topBar = { TopBar() }
                 ) {
-                    PostsListView()
+                    PostsFeedsScreen()
                 }
             }
         }

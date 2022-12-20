@@ -111,6 +111,10 @@ internal class PostsRepositoryImpl(
         }
     }
 
+    override fun getPostById(documentId: String?): Flow<PostView> {
+        return postsDao.getPostById(documentId)
+    }
+
     private fun getPostComments(documentId: String?): List<Comment> {
         return commentsDao.getPostComments(documentId)
     }

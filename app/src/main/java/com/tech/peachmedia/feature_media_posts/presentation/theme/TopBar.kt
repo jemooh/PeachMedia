@@ -7,7 +7,6 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TopBar() {
-
     TopAppBar(
         title = { Text("Peach Media App") }
     )

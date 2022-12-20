@@ -7,25 +7,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import com.tech.peachmedia.feature_media_posts.data.datasource.remote.model.Result
 import com.tech.peachmedia.feature_media_posts.presentation.model.PostView
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class PostsViewModel(private val postsRepository: PostsRepository) :
     ViewModel() {
     private val _state = MutableStateFlow(PostsState())
     val state: StateFlow<PostsState> = _state
 
-    private var getCurrentJob: Job? = null
-
     init {
         fetchRemoteUsers()
         fetchRemotePost()
-        getLocalPosts()
+        getAllPosts()
     }
 
-
-     fun fetchRemotePost() {
+    fun fetchRemotePost() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = postsRepository.fetchRemoteMediaPost()) {
                 is Result.Loading -> {
@@ -48,7 +45,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         }
     }
 
-     fun fetchRemoteUsers() {
+    fun fetchRemoteUsers() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = postsRepository.fetchRemoteUsers()) {
                 is Result.Loading -> {
@@ -71,10 +68,29 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
         }
     }
 
-    fun getLocalPosts() {
+    fun filterPostByMediaType(mediaType: String) {
+        postsRepository.filterPostByMediaType(mediaType).onEach { items ->
+            _state.value = state.value.copy(
+                posts = items
+            )
+            Timber.d("PostItems.."+mediaType+items.count())
+        }.launchIn(viewModelScope)
+    }
+
+    fun getAllPosts() {
         postsRepository.getAllPosts().onEach { items ->
             _state.value = state.value.copy(
                 posts = items
+            )
+            Timber.d("PostItems.."+items.count())
+        }.launchIn(viewModelScope)
+    }
+
+
+    fun getPostById(documentId: String?) {
+        postsRepository.getPostById(documentId).onEach { item ->
+            _state.value = state.value.copy(
+                post = item
             )
         }.launchIn(viewModelScope)
     }
@@ -83,6 +99,7 @@ class PostsViewModel(private val postsRepository: PostsRepository) :
 
 data class PostsState(
     val posts: List<PostView> = emptyList(),
+    val post: PostView? = null,
     val isRefreshingPosts: Boolean = false,
     val isSuccessFetchPosts: Boolean = false,
     val isErrorFetchingPosts: Boolean = false,

@@ -9,5 +9,6 @@ interface PostsRepository {
     suspend fun fetchRemoteUsers(): Result<Boolean>
     suspend fun fetchRemoteMediaPost(): Result<Boolean>
     fun getAllPosts(): Flow<List<PostView>>
+    fun getPostById(documentId: String?): Flow<PostView>
     fun filterPostByMediaType(mediaType: String): Flow<List<PostView>>
 }

@@ -10,6 +10,9 @@ interface PostsDao : CoroutineBaseDao<Post> {
     @Query("SELECT post.documentId,post.authorID,post.mediaType,post.storageRef,post.caption,user.username,post.createdAt,post.createTime,post.updateTime FROM Post post JOIN User user ON user.userId=post.authorID ")
     fun getAllPosts(): Flow<List<PostView>>
 
+    @Query("SELECT post.documentId,post.authorID,post.mediaType,post.storageRef,post.caption,user.username,post.createdAt,post.createTime,post.updateTime FROM Post post JOIN User user ON user.userId=post.authorID WHERE post.documentId=:documentId ")
+    fun getPostById(documentId: String?): Flow<PostView>
+
     @Query("SELECT  post.documentId,post.authorID,post.mediaType,post.storageRef,post.caption,user.username,post.createdAt,post.createTime,post.updateTime FROM Post post JOIN User user ON user.userId=post.authorID WHERE mediaType=:mediaType")
     fun filterPostByMediaType(mediaType: String): Flow<List<PostView>>
 }
