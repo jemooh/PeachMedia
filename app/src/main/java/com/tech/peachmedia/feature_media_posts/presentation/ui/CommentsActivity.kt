@@ -56,6 +56,7 @@ class CommentsActivity : AppCompatActivity() {
                                             MainActivity::class.java
                                         )
                                     )
+                                    this.finish()
                                 }) {
                                     Icon(Icons.Rounded.ArrowBack, "")
                                 }

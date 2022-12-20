@@ -137,7 +137,6 @@ dependencies {
     // UI Test - Compose
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.0-alpha01")
     // Needed for createComposeRule, but not createAndroidComposeRule:
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.0-alpha01")
 
@@ -195,5 +194,11 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.6.1")
 
     testImplementation("app.cash.turbine:turbine:0.7.0")
+
+    androidTestImplementation("androidx.ui:ui-test:1.1.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.1")
+
+
+
 
 }
