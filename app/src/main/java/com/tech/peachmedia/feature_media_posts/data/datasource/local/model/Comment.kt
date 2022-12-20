@@ -7,9 +7,10 @@ import androidx.room.PrimaryKey
 
 @Entity(indices = [Index(value = ["comment"], unique = true)])
 data class Comment(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
     val comment: String,
-    val documentId: String,
-    val updateTime: String,
+    val documentId: String? = null,
+    val updateTime: String? = null,
 )
 

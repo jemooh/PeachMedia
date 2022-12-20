@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "25959082223",
+    "project_id": "peachtest-f370d",
+    "storage_bucket": "peachtest-f370d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25959082223:android:d7bb1b7a33d1f46cd7931a",
+        "android_client_info": {
+          "package_name": "com.tech.peachmedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25959082223-olul4lsouhk95m7tdei210frle2epcml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvj1m5z6En8Ct0sjP6CWGT1vdbSHnXE44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25959082223-olul4lsouhk95m7tdei210frle2epcml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

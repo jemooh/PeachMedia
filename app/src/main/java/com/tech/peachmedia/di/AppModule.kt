@@ -6,7 +6,9 @@ import com.tech.peachmedia.feature_media_posts.data.datasource.remote.api.Common
 import com.tech.peachmedia.feature_media_posts.data.repository.PostsRepository
 import com.tech.peachmedia.feature_media_posts.domain.repository.PostsRepositoryImpl
 import com.tech.peachmedia.feature_media_posts.domain.utils.Constants
+import com.tech.peachmedia.feature_media_posts.presentation.viewmodel.PostsViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -39,8 +41,8 @@ val appModule = module {
         get<PeachDatabase>().usersDao
     }
 
-    single {
-
+    viewModel {
+        PostsViewModel(postsRepository = get())
     }
 
     factory<PostsRepository> {

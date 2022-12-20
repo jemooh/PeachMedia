@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PeachMedia</string>
+    <string name="tv_view_all_comments">view all %s Comments</string>
+    <string name="tv_comments">%s Comments</string>
+    <string name="comments">Comments</string>
+    <string name="tv_filter_feeds">Filter feeds</string>
 </resources>

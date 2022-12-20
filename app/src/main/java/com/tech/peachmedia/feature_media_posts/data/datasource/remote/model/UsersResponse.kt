@@ -1,7 +1,7 @@
 package com.tech.peachmedia.feature_media_posts.data.datasource.remote.model
 
 data class UserResponse(
-    val documents: UserDocuments? = null
+    val documents: List<UserDocuments>? = null
 )
 
 data class UserDocuments(
